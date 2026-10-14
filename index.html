@@ -254,7 +254,7 @@ function renderKpis(A){
     ['缓存命中率',ce.toFixed(1)+'%'],
     ['预估金额（元）',money,rcStr]
   ];
-  $('#kpis').innerHTML=items.map(x=>'<div class="kpi"><div class="k">'+x[0]+'</div><div class="v">'+x[1]+'</div>'+(x[2]?'<div class="s">'+x[2]+'</div>':'')).join('');
+  $('#kpis').innerHTML=items.map(x=>'<div class="kpi"><div class="k">'+x[0]+'</div><div class="v">'+x[1]+'</div>'+(x[2]?'<div class="s">'+x[2]+'</div>':'')+'</div>').join('');
 }
 
 function renderHeat(A){
