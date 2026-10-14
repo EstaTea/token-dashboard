@@ -29,7 +29,7 @@ header{display:flex;justify-content:space-between;align-items:flex-end;margin-bo
 .t5:hover{border-color:var(--focus)}
 .t5.on{background:var(--selbg);border-color:var(--selbd)}
 .t5.on .k,.t5.on .v{color:var(--selfg)}
-.t5 .k{font-size:9px;color:var(--t5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t5 .k{font-size:9px;color:var(--t5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1 1 auto;min-width:0}
 .t5 .k i{width:6px;height:6px;margin-right:3px;vertical-align:0}
 .t5 .v{font-size:11px;font-weight:600;color:var(--t6);white-space:nowrap;flex:none}
 .heat-wrap{max-height:640px;overflow-y:auto;border:1px solid var(--border3);border-radius:8px;padding:6px 8px}
@@ -478,6 +478,9 @@ function renderModelDist(){
     '<text x="'+x90+'" y="'+(pT-1)+'" font-size="13" fill="'+CJ.axis+'">90%</text>';
   st.forEach((s,ri)=>{
     const col=RC?RC[s.m]:modelColor(s.m);
+    const nmRaw=D.models[s.m];
+    const maxCh=Math.max(4,Math.floor((nameW-4)/6.2));
+    const nmShow=esc(nmRaw.length>maxCh?nmRaw.slice(0,Math.max(1,maxCh-1))+'…':nmRaw);
     const baseY=pT+ri*rh+24;
     const raw=cntM[ri],sm=raw.map((v,i)=>((raw[i-1]||0)+2*v+(raw[i+1]||0))/4);
     const mx=Math.max(...sm,1e-9);
@@ -488,7 +491,7 @@ function renderModelDist(){
     out+='<path d="'+d+'" fill="'+col+'" fill-opacity="0.3" stroke="'+col+'" stroke-width="0.8" data-tip="'+tip+'"/>'+
       '<line x1="'+X(s.p50).toFixed(1)+'" y1="'+(baseY-bh-1)+'" x2="'+X(s.p50).toFixed(1)+'" y2="'+baseY+'" stroke="'+col+'" stroke-width="1.6" data-tip="'+tip+'"/>'+
       '<circle cx="'+X(s.p90).toFixed(1)+'" cy="'+(baseY-4)+'" r="2" fill="'+CJ.axis+'" data-tip="'+tip+'"/>'+
-      '<text x="0" y="'+(baseY-5.5)+'" font-size="11" fill="'+CJ.t1+'">'+esc(D.models[s.m])+'</text>'+
+      '<text x="0" y="'+(baseY-5.5)+'" font-size="11" fill="'+CJ.t1+'">'+nmShow+'</text>'+
       '<text x="'+cntX+'" y="'+(baseY-5.5)+'" font-size="11" fill="'+CJ.t1+'">'+nf(s.n)+'</text>'+
       '<text x="'+x50+'" y="'+(baseY-9)+'" font-size="12" fill="'+CJ.t1+'">'+fmt(s.p50)+'</text>'+
       '<rect x="'+x50+'" y="'+(baseY-5)+'" width="'+barW+'" height="5" fill="'+CJ.dimBar+'" fill-opacity="0.7" data-tip="'+tip+'"/>'+
